@@ -123,6 +123,8 @@ function flujoMeta(k){return FLUJOS.find(f=>f.key===k);}
 function dkey(id,daykey){return id+"@"+daykey;}
 
 function groupsOnDay(dt){
+  const dow=dt.getDay();
+  if(dow===0||dow===6) return [];
   const map={};
   for(const t of TASKS){
     if(off.has(t.flujo)) continue;
@@ -131,7 +133,6 @@ function groupsOnDay(dt){
     }
   }
   for(const k in map) map[k].sort((a,b)=>a.nivel-b.nivel || d(a.start)-d(b.start) || a.name.localeCompare(b.name));
-  // Mostrar el flujo solo si ese día tiene al menos una actividad concreta (no solo el hito)
   return FLUJO_ORDER.filter(k=>map[k] && map[k].some(a=>a.nivel!==0)).map(k=>({flujo:k,acts:map[k]}));
 }
 
