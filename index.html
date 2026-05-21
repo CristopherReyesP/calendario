@@ -196,7 +196,7 @@ function render(){
           '<div class="head"><span class="caret">▶</span><span class="ttl">'+escapeHtml(meta.label)+'</span><span class="done">✕</span><span class="cnt">'+checkable.length+'</span></div>'+
           '<div class="body"><div class="inner">'+inner+'</div></div>';
 
-        b.querySelector(".head").onclick=(ev)=>{ev.stopPropagation();b.classList.toggle("open");};
+        b.querySelector(".head").onclick=(ev)=>{ev.stopPropagation();b.classList.toggle("open");if(b.classList.contains("open"))b.querySelectorAll(".note").forEach(ta=>{if(ta.value.trim()){ta.style.height="auto";ta.style.height=ta.scrollHeight+"px";}});};
         b.querySelectorAll(".act").forEach(actEl=>{
           const id=actEl.getAttribute("data-id");
           actEl.querySelector(".chk").onclick=(ev)=>{
