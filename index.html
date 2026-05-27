@@ -67,6 +67,13 @@
   .bar .body .act .note::placeholder{color:rgba(255,255,255,.45)}
   .bar .body .act .note:focus{outline:none;border-color:rgba(255,255,255,.6);background:rgba(0,0,0,.4)}
   .bar:hover{filter:brightness(1.13)}
+  .bar .body .act.ms{background:rgba(0,0,0,.4);border-radius:5px;margin:2px -2px;padding:5px 7px 5px 0}
+  .bar .body .act.ms .badge{background:#222;color:#666}
+  .bar .body .act.ms .an{color:#777}
+  .bar .body .act.ms .ad{opacity:.4}
+  .bar .body .act.ms .chk{border-color:rgba(255,255,255,.2);opacity:.45}
+  .bar .body .act.ms.done .an{color:#555}
+  .bar .body .act.ms .note{background:rgba(0,0,0,.35);border-color:rgba(255,255,255,.12);color:#888}
   .del-custom{flex:none;width:16px;height:16px;border:none;background:rgba(255,255,255,.18);color:#fff;border-radius:4px;font-size:11px;cursor:pointer;display:flex;align-items:center;justify-content:center;margin-top:1px;transition:.12s}
   .del-custom:hover{background:var(--red)}
   .modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.6);display:flex;align-items:center;justify-content:center;z-index:999;display:none}
@@ -229,10 +236,11 @@ function render(){
           const noteVal=notes[dkey(a.id,daykey)]||"";
           const hasNote=noteVal.trim().length>0;
           const isCustom=a.id.startsWith("custom_");
-          inner+='<div class="act'+(isDone?" done":"")+'" data-id="'+a.id+'">'+
+          const ms=/Orq|MuleSoft/.test(a.name);
+          inner+='<div class="act'+(ms?" ms":"")+(isDone?" done":"")+'" data-id="'+a.id+'">'+
             '<div class="chk">✕</div>'+
             (isCustom?'<button class="del-custom" data-cid="'+a.id+'" title="Eliminar actividad">✕</button>':'')+
-            '<div class="txt"><span class="an"><span class="badge">'+(isCustom?"Personal":NIV[a.nivel])+'</span>'+(a.isStart?"":"↳ ")+escapeHtml(a.name)+
+            '<div class="txt"><span class="an"><span class="badge">'+(isCustom?"Personal":ms?"MS":NIV[a.nivel])+'</span>'+(a.isStart?"":"↳ ")+escapeHtml(a.name)+
               '<span class="noteflag'+(hasNote?" on":"")+'" title="Observación">✎</span></span>'+
             '<span class="ad">'+fmt(a.start)+' → '+fmt(a.end)+'</span>'+
             '<textarea class="note" rows="1" placeholder="Escribe una observación…">'+escapeHtml(noteVal)+'</textarea>'+
